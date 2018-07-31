@@ -20,9 +20,7 @@ class LeNet:
                            hidden_size1 = 120, hidden_size2 = 84, output_size =10,weight_init_std=0.01,
                            pool={'pool_h':2, 'pool_w':2, 'stride':2, 'pad':0}):
         
-        #重みの初期化、Xavier
-#         pre_node_nums = np.array([1*5*5, 6*5*5, 16*4*4, hidden_size1,hidden_size2])
-#         weight_init_scales= np.sqrt(2.0 / pre_node_nums)  # ReLUを使う場合に推奨される初期値
+
         input_size = input_dim[1]
         filter_num1 = conv_param1['filter_num']
         filter_size1 = conv_param1['filter_size']
