@@ -14,7 +14,7 @@ class LeNet:
     affine - relu - affine - relu - affine - softmax 
     
     '''
-    def __init__(self, input_dim =(3, 32, 32),
+    def __init__(self, input_dim,
                            conv_param1={'filter_num':60, 'filter_size':5,'pad':2,'stride':1},
                            conv_param2={'filter_num':160, 'filter_size':5, 'pad':2, 'stride':1},
                            hidden_size1 = 120, hidden_size2 = 84, output_size =10,weight_init_std=0.01,
