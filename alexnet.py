@@ -25,31 +25,31 @@ class AlexNet:
 
         # レイヤの生成
         self.layers = [
-                                Convolution(W1, b1,stride=4,pad=52), #0
-                                Relu(), #1
-                                Pooling(pool_h=3, pool_w=3, stride=2), #2
-                                BatchNormalization(gamma=1,beta=0), #3
-                                Convolution(W2, b2,stride=1, pad=2), #4
-                                Relu(), #5
-                                Pooling(pool_h=3, pool_w=3, stride=2), #6
-                                BatchNormalization(gamma=1,beta=0), #7
-                                Convolution(W3, b3,stride=1, pad=1), #8
-                                Relu(), #9
-                                Convolution(W4, b4,stride=1, pad=1), #10
-                                Relu(), #11
-                                Convolution(W5, b5,stride=1, pad=1),#12
-                                Relu(), #13
-                                Pooling(pool_h=3, pool_w=3, stride=2), #14
-                                BatchNormalization(gamma=1,beta=0), #15
-                                Flatten(), #16
-                                Affine(W6, b6), #17
-                                Relu(), #18
-                                Dropout(), #19
-                                Affine(W7,b7), #20
-                                Relu(), #21
-                                Dropout(), #22
-                                Affine(W8,b8) #23
-                                ]
+                        Convolution(W1, b1,stride=4,pad=52), #0
+                        Relu(), #1
+                        Pooling(pool_h=3, pool_w=3, stride=2), #2
+                        BatchNormalization(gamma=1,beta=0), #3
+                        Convolution(W2, b2,stride=1, pad=2), #4
+                        Relu(), #5
+                        Pooling(pool_h=3, pool_w=3, stride=2), #6
+                        BatchNormalization(gamma=1,beta=0), #7
+                        Convolution(W3, b3,stride=1, pad=1), #8
+                        Relu(), #9
+                        Convolution(W4, b4,stride=1, pad=1), #10
+                        Relu(), #11
+                        Convolution(W5, b5,stride=1, pad=1),#12
+                        Relu(), #13
+                        Pooling(pool_h=3, pool_w=3, stride=2), #14
+                        BatchNormalization(gamma=1,beta=0), #15
+                        Flatten(), #16
+                        Affine(W6, b6), #17
+                        Relu(), #18
+                        Dropout(), #19
+                        Affine(W7,b7), #20
+                        Relu(), #21
+                        Dropout(), #22
+                        Affine(W8,b8) #23
+                        ]
         
         self.loss_layer = SoftmaxWithLoss()
         
