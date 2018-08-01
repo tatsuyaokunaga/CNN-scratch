@@ -24,19 +24,19 @@ class LeNet:
 
         # レイヤの生成
         self.layers = [
-                                Convolution(W1, b1,stride=1,pad=2),
-                                Relu(),
-                                Pooling(pool_h=2, pool_w=2, stride=2),
-                                Convolution(W2, b2,stride=1, pad=2),
-                                Relu(),
-                                Pooling(pool_h=2, pool_w=2, stride=2),
-                                Flatten(),
-                                Affine(W3, b3),
-                                Relu(),
-                                Affine(W4,b4),
-                                Relu(),
-                                Affine(W5, b5)
-                                ]
+                        Convolution(W1, b1,stride=1,pad=2),
+                        Relu(),
+                        Pooling(pool_h=2, pool_w=2, stride=2),
+                        Convolution(W2, b2,stride=1, pad=2),
+                        Relu(),
+                        Pooling(pool_h=2, pool_w=2, stride=2),
+                        Flatten(),
+                        Affine(W3, b3),
+                        Relu(),
+                        Affine(W4,b4),
+                        Relu(),
+                        Affine(W5, b5)
+                        ]
         
         self.loss_layer = SoftmaxWithLoss()
         
