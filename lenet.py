@@ -1,103 +1,70 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# coding: utf-8\n",
-    "import sys,os\n",
-    "import numpy as np\n",
-    "\n",
-    "class LeNet:\n",
-    "    '''\n",
-    "    ネットワーク構成\n",
-    "    conv - relu - pool - conv - relu - pool\n",
-    "    affine - relu - affine - relu - affine - softmax \n",
-    "    '''\n",
-    "    def __init__(self, input_dim,weight_init_std=0.01):\n",
-    "        \n",
-    "        #学習に必要なパラメータの設定\n",
-    "        W1 = weight_init_std * np.random.randn(6,1,5,5)\n",
-    "        b1 = np.zeros(6,)\n",
-    "        W2 = weight_init_std * np.random.randn(16,6,5,5)\n",
-    "        b2 = np.zeros(16)\n",
-    "        W3 = weight_init_std * np.random.randn(784, 120)\n",
-    "        b3 = np.zeros(120)\n",
-    "        W4 = weight_init_std * np.random.randn(120,84)\n",
-    "        b4 = np.zeros(84)\n",
-    "        W5 = weight_init_std* np.random.randn(84, 10)\n",
-    "        b5 = np.zeros(10)\n",
-    "\n",
-    "        # レイヤの生成\n",
-    "        self.layers = [\n",
-    "                                Convolution(W1, b1,stride=1,pad=2),\n",
-    "                                Relu(),\n",
-    "                                Pooling(pool_h=2, pool_w=2, stride=2),\n",
-    "                                Convolution(W2, b2,stride=1, pad=2),\n",
-    "                                Relu(),\n",
-    "                                Pooling(pool_h=2, pool_w=2, stride=2),\n",
-    "                                Flatten(),\n",
-    "                                Affine(W3, b3),\n",
-    "                                Relu(),\n",
-    "                                Affine(W4,b4),\n",
-    "                                Relu(),\n",
-    "                                Affine(W5, b5)\n",
-    "                                ]\n",
-    "        \n",
-    "        self.loss_layer = SoftmaxWithLoss()\n",
-    "        \n",
-    "        self.params, self.grads = [], []\n",
-    "        for layer in (self.layers[0],self.layers[3],self.layers[7],self.layers[9],self.layers[11]):\n",
-    "            self.params += layer.params\n",
-    "            self.grads += layer.grads \n",
-    "        \n",
-    "    def predict(self, x):\n",
-    "        for layer in self.layers:\n",
-    "            x = layer.forward(x)\n",
-    "        return x\n",
-    "        \n",
-    "    def forward(self, x, t):\n",
-    "        score = self.predict(x) \n",
-    "        loss = self.loss_layer.forward(score,t)\n",
-    "        return loss\n",
-    "\n",
-    "    def backward(self, dout=1):\n",
-    "        dout = self.loss_layer.backward(dout)\n",
-    "        for layer in reversed(self.layers):\n",
-    "            dout = layer.backward(dout)   \n",
-    "        return dout\n",
-    "    \n",
-    "    def accuracy(self, x, t):\n",
-    "        y = self.predict(x)\n",
-    "        y = np.argmax(y, axis=1)\n",
-    "        t = np.argmax(t, axis=1)\n",
-    "        \n",
-    "        accuracy = np.sum(y == t) / float(x.shape[0])\n",
-    "        return accuracy"
-   ]
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.6.5"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 2
-}
+# coding: utf-8
+import sys,os
+import numpy as np
+
+class LeNet:
+    '''
+    ネットワーク構成
+    conv - relu - pool - conv - relu - pool
+    affine - relu - affine - relu - affine - softmax 
+    '''
+    def __init__(self, input_dim,weight_init_std=0.01):
+        
+        #学習に必要なパラメータの設定
+        W1 = weight_init_std * np.random.randn(6,1,5,5)
+        b1 = np.zeros(6,)
+        W2 = weight_init_std * np.random.randn(16,6,5,5)
+        b2 = np.zeros(16)
+        W3 = weight_init_std * np.random.randn(784, 120)
+        b3 = np.zeros(120)
+        W4 = weight_init_std * np.random.randn(120,84)
+        b4 = np.zeros(84)
+        W5 = weight_init_std* np.random.randn(84, 10)
+        b5 = np.zeros(10)
+
+        # レイヤの生成
+        self.layers = [
+                                Convolution(W1, b1,stride=1,pad=2),
+                                Relu(),
+                                Pooling(pool_h=2, pool_w=2, stride=2),
+                                Convolution(W2, b2,stride=1, pad=2),
+                                Relu(),
+                                Pooling(pool_h=2, pool_w=2, stride=2),
+                                Flatten(),
+                                Affine(W3, b3),
+                                Relu(),
+                                Affine(W4,b4),
+                                Relu(),
+                                Affine(W5, b5)
+                                ]
+        
+        self.loss_layer = SoftmaxWithLoss()
+        
+        self.params, self.grads = [], []
+        for layer in (self.layers[0],self.layers[3],self.layers[7],self.layers[9],self.layers[11]):
+            self.params += layer.params
+            self.grads += layer.grads 
+        
+    def predict(self, x):
+        for layer in self.layers:
+            x = layer.forward(x)
+        return x
+        
+    def forward(self, x, t):
+        score = self.predict(x) 
+        loss = self.loss_layer.forward(score,t)
+        return loss
+
+    def backward(self, dout=1):
+        dout = self.loss_layer.backward(dout)
+        for layer in reversed(self.layers):
+            dout = layer.backward(dout)   
+        return dout
+    
+    def accuracy(self, x, t):
+        y = self.predict(x)
+        y = np.argmax(y, axis=1)
+        t = np.argmax(t, axis=1)
+        
+        accuracy = np.sum(y == t) / float(x.shape[0])
+        return accuracy
