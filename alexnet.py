@@ -1,5 +1,4 @@
 # coding: utf-8
-import sys,os
 import numpy as np
 
 class AlexNet:
