@@ -37,6 +37,23 @@ class Affine:
         dx = np.dot(dout, W.T)
         dW = np.dot(self.x.T, dout)
         db = np.sum(dout, axis=0)
+        
+        
+class Flatten: # 平滑化クラス
+    def __init__(self):
+        pass
+  
+    def forward(self,x):
+        self.original_x_shape=x.shape 
+        out = x.reshape(x.shape[0],-1)
+        
+        return out
+    
+    def backward(self,dout):
+        
+        dx= dout.reshape(self.original_x_shape)
+
+        return dx
 
         self.grads[0][...] = dW
         self.grads[1][...] = db
